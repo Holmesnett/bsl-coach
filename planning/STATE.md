@@ -2,20 +2,19 @@
 
 **Project:** BSL Coach
 **Client:** Hudson Mac Cayman Holding Company
-**Last updated:** 2026-07-01 (Sprint 003 Builder complete — A-011 live checks pending on both sprints)
+**Last updated:** 2026-07-01 (Sprint 003 CLOSED — A-011 signed off; Sprint 002 A-011 still pending)
 
 ---
 
 ## Current Phase
 
-Build — Sprint 003 (Active BSL Ledger + Budget Checks) **code complete**.
-202 tests green, A-001..A-010 verified (see sprint 003 CLOSEOUT.md) —
-**awaiting Dave's A-011 live check** (one real `bsl-ledger` run vs IBKR
-Desktop records).
+Build — Sprint 003 (Active BSL Ledger + Budget Checks) **complete and
+closed**. A-001..A-011 all verified (see sprint 003 CLOSEOUT.md); A-011
+signed off 2026-07-01 ~22:30 ET — live report vs a fresh 47-fill snapshot
+matched IBKR Desktop exactly (NOW +$458.61).
 
-Sprint 002 (Position Sizing Calculator) also code complete — **its A-011
-live smoke test is likewise awaiting Dave** on the next real trading
-morning. Neither A-011 blocks the other.
+Sprint 002 (Position Sizing Calculator) is code complete — **its A-011
+live smoke test is still awaiting Dave** on the next real trading morning.
 
 ---
 
@@ -30,8 +29,8 @@ morning. Neither A-011 blocks the other.
 
 ## Active Sprint
 
-None active — Sprint 003 Builder work done; both sprints close on their
-A-011 sign-offs.
+None active — Sprint 003 closed (A-011 signed off 2026-07-01). Sprint 002
+closes on its A-011 sign-off.
 
 ## Live-account context
 
@@ -43,8 +42,7 @@ A-011 sign-offs.
 ## Next Actions
 
 1. Dave: Sprint 002 A-011 — one real morning sizing vs hand math; record in sprint 002 CLOSEOUT.md and here.
-2. Dave: Sprint 003 A-011 — one real `bsl-ledger` run against a fresh trades snapshot (flow: `docs/LEDGER_RECIPE.md`); NOW trade appears; totals vs IBKR Desktop. Record in sprint 003 CLOSEOUT.md and here.
-3. On both sign-offs: next Architect conversation picks parser migration vs observability TUI.
+2. Next Architect conversation picks the next sprint: parser migration vs observability TUI.
 
 ## Blockers
 
@@ -52,6 +50,6 @@ None.
 
 ## Watch Items
 
-- Both A-011 live checks are open — the ledger is not "trusted" until its totals are sanity-checked against IBKR Desktop once (R-011 field-semantics check on real connector output, not just the fixture).
+- Sprint 002's A-011 live check is still open — the sizing flow awaits one real-morning run vs hand math. (Sprint 003's ledger passed its live check: R-011 field semantics confirmed on real connector output 2026-07-01.)
 - Money-touching code carries the D-009 raised validation bar — Sprint 003's P&L and budget math shipped with the mandatory matrix (a real double-count bug on cross-through-zero fills was caught by it pre-ship).
 - Let iCloud sync settle before switching devices; push to GitHub at every sprint boundary.

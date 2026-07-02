@@ -2,7 +2,7 @@
 
 **Builder:** Fable 5 (Claude Code)
 **Date:** 2026-07-01
-**Status:** Built and verified A-001..A-010. **A-011 (live check) awaiting Dave's sign-off.**
+**Status:** COMPLETE — A-001..A-011 all verified. Sprint closed 2026-07-01 (A-011 sign-off below).
 
 ---
 
@@ -80,3 +80,9 @@ per-fill `realized_pnl` sums to **exactly +$458.61** (including a
 None of substance. The ground-truth fixture was constructed from the
 documented aggregates (see provenance above) since no raw fill table
 exists in the pack — every published number is reproduced exactly.
+
+---
+
+## A-011 sign-off
+
+**2026-07-01 ~22:30 ET — SIGNED OFF by Dave.** Live `bsl-ledger report` run against a fresh trades snapshot (47 fills, DAYS_7) and account snapshot (NLV $3,819,828.43): one closed episode NOW long 1000 sh realized +$458.61 bucketed to ET 2026-07-01; 31 non-BSL fills correctly routed to the review list; budgets 0% usage; exit 0. Dave confirmed IBKR Desktop logs the NOW realized P&L as $458.61 — exact match. **Sprint 003 is complete and closed.**

@@ -15,7 +15,7 @@ Micro-app rigor everywhere except money-touching code. Money-touching = anything
 - Gate 1 — ground truth: **PASSED.** `tests/fixtures/now_2026_07_01_fills.json` reproduces exactly +$458.61 through IBKR per-fill `realized_pnl` (one closed NOW episode, 1000 sh, ET 2026-07-01) — asserted in `tests/test_ledger.py::TestGroundTruth` and verified end-to-end via `bsl-ledger report` against the fixture (exit 0, caps $38,198.28 / $114,594.85 / $190,991.42 at NLV $3,819,828.43).
 - Gate 2 — full matrix green: **PASSED.** 202 tests (`PYTHONPATH=src python3 -m pytest -q`): episodes (incl. cross-through-zero split — a real double-count bug caught and fixed pre-ship), ET bucketing (2026-07-02T01:30Z → ET 07-01 rollover + both DST dates), budget thresholds at exact 75%/100% boundaries with two NLVs, dedupe (A-007), review-list routing (A-006). Sprint 002's 81 tests untouched (`git diff` empty) and green.
 - Gate 3 — guardrails: **PASSED.** `grep -rn "create_order_instruction\|ib_insync\|mcp__" src/` → zero hits; `tests/test_guardrails.py` now scans all 7 modules; warnings only, no enforcement paths (D-003).
-- Gate 4 — A-011 live check: **PENDING.** One real report vs IBKR Desktop's records, Dave signs off (flow: `docs/LEDGER_RECIPE.md`).
+- Gate 4 — A-011 live check: **PASSED 2026-07-01 ~22:30 ET.** Live report against a fresh 47-fill DAYS_7 snapshot: NOW episode +$458.61 exact vs IBKR Desktop; 31 non-BSL fills routed to review; Dave signed off (sprint 003 CLOSEOUT.md). Sprint 003 closed.
 
 ## Standing rules
 
