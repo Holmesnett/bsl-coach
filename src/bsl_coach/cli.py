@@ -103,6 +103,20 @@ def build_parser() -> argparse.ArgumentParser:
         "--json", action="store_true", help="emit machine-readable JSON"
     )
     parser.add_argument(
+        "--register",
+        action="store_true",
+        help=(
+            "on a successful sizing, register this trade as Active BSL in "
+            "the registry (D-018; sizing without this flag never writes)"
+        ),
+    )
+    parser.add_argument(
+        "--registry",
+        type=Path,
+        default=None,
+        help="registry file for --register (default: data/bsl_registry.json)",
+    )
+    parser.add_argument(
         "--version", action="version", version=f"bsl-size {__version__}"
     )
     return parser
@@ -181,6 +195,7 @@ def _render_human(
     nlv_source: str,
     snapshot_age_seconds: int | None,
     warnings: list[str],
+    registered_id: str | None = None,
 ) -> str:
     lines: list[str] = []
     lines.append(
@@ -213,6 +228,8 @@ def _render_human(
     )
     lines.append(f"Checks: {checks}")
     lines.append(f"Binding constraint: {result.binding_constraint or 'none'}")
+    if registered_id is not None:
+        lines.append(f"REGISTERED: {registered_id} (Active BSL registry)")
     for w in warnings:
         lines.append(f"WARNING: {w}")
     return "\n".join(lines)
@@ -224,6 +241,7 @@ def _render_json(
     nlv_source: str,
     snapshot_age_seconds: int | None,
     warnings: list[str],
+    registered_id: str | None = None,
 ) -> str:
     payload = {
         "symbol": symbol,
@@ -246,6 +264,7 @@ def _render_json(
         "concentration_pct": str(result.concentration_pct),
         "checks": result.checks,
         "binding_constraint": result.binding_constraint,
+        "registered_id": registered_id,
         "warnings": warnings,
     }
     return json.dumps(payload, indent=2)
@@ -283,10 +302,39 @@ def main(argv: list[str] | None = None) -> int:
         return EXIT_INVALID_INPUT
 
     all_warnings = warnings + result.warnings
+
+    registered_id: str | None = None
+    if args.register:
+        # FR-2: registration happens only on a successful sizing (exit 0);
+        # every failure path above has already returned before this point.
+        from .registry import (
+            DEFAULT_PATH as REGISTRY_DEFAULT_PATH,
+            RegistryError,
+            add_entry,
+            load_registry,
+        )
+
+        registry_path = args.registry if args.registry is not None else REGISTRY_DEFAULT_PATH
+        try:
+            registry = load_registry(registry_path)
+            entry = add_entry(
+                registry,
+                symbol=symbol,
+                direction=result.direction,
+                entry=result.entry,
+                stop=result.stop,
+                tier=result.tier,
+                shares_sized=result.shares,
+            )
+        except RegistryError as exc:
+            print(f"REGISTRY ERROR: {exc}", file=sys.stderr)
+            return EXIT_SNAPSHOT_PROBLEM
+        registered_id = entry.id
+
     if args.json:
-        print(_render_json(symbol, result, nlv_source, snapshot_age_seconds, all_warnings))
+        print(_render_json(symbol, result, nlv_source, snapshot_age_seconds, all_warnings, registered_id))
     else:
-        print(_render_human(symbol, result, nlv_source, snapshot_age_seconds, all_warnings))
+        print(_render_human(symbol, result, nlv_source, snapshot_age_seconds, all_warnings, registered_id))
     return EXIT_OK
 
 

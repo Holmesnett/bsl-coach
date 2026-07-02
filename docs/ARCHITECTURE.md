@@ -4,20 +4,30 @@
 
 Local, file-based Python on macOS. No web framework, no database, no daemon. Three layers:
 
-1. **Claude runtime (Cowork / Claude sessions)** — the only place MCP tools exist. Fetches live account data via the IBKR MCP connector, refreshes `data/account_snapshot.json`, invokes CLIs, relays results. Later sprints: stages orders via `create_order_instruction` (human-transmitted always, D-003).
-2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002 (shipped 2026-07-01): `risk_math` (Decimal tier/cap math, `SizingResult`, typed exceptions incl. `NoViableSizeError`), `snapshot` (versioned `bsl-snapshot-1` schema, staleness at ≥ 60 min), `cli` (`bsl-size`, exit codes 0/2/3/4). Later sprints add: parser (migrated `pm_pdf_to_pine.py`), ledger/tagging tracker, TUI dashboard.
-3. **External surfaces** — TradingView (Pine scripts via `pbcopy`), IBKR Desktop (manual execution; Review Instructions tab for staged orders), iCloud (folder sync), GitHub (version control).
+1. **Claude runtime (Cowork / Claude sessions)** — the only place MCP tools exist. Fetches live account data via the IBKR MCP connector and refreshes the snapshot files; invokes CLIs; relays results. Later sprints: stages orders via `create_order_instruction` (human-transmitted always, D-003).
+2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002: `risk_math`, `snapshot`, `cli` (`bsl-size`). Sprint 003: `registry`, `trades`, `ledger`, `cli_ledger` (`bsl-ledger`). Later: parser (migrated `pm_pdf_to_pine.py`), TUI dashboard.
+3. **External surfaces** — TradingView (Pine via `pbcopy`), IBKR Desktop (manual execution; Review Instructions tab for future staged orders), iCloud (folder sync), GitHub (version control).
 
-## Data flow (Sprint 002 slice)
+## Snapshot-file interface (D-014 / D-020)
 
-PM PDF → (existing external parser) → Pine script → TradingView charts. In parallel: Claude fetches NLV + positions → snapshot file → `bsl-size` → share count + cap checks → Dave builds the bracket in IBKR Desktop manually.
+MCP-callable code and pure Python never mix. Claude sessions write:
+
+- `data/account_snapshot.json` (`bsl-snapshot-1`) — NLV + per-symbol market values (from `get_account_summary` / `get_account_positions`), plus optional `available_funds` for the informational D-019 margin line.
+- `data/trades_snapshot.json` (`bsl-trades-1`) — raw fills (from `get_account_trades`); UTC fill times convert to ET at ingest (D-021).
+
+Both are git-ignored, versioned-schema, staleness-checked. Explicit CLI flags always override. The BSL registry (`data/bsl_registry.json`, `bsl-registry-1`, D-018) is likewise git-ignored and written only by `bsl-size --register` / `bsl-ledger tag|untag`.
+
+## Data flow
+
+PM PDF → (external parser, pre-migration) → Pine script → TradingView. Sizing: Claude refreshes account snapshot → `bsl-size` → share count + cap checks (+ optional `--register` tags the trade as BSL, D-018). Ledger: Claude refreshes trades snapshot → `bsl-ledger` → episode P&L split Active-BSL vs everything-else, ET-bucketed (D-021), budget usage vs 1%/3%/5% caps — warnings only, never enforcement.
 
 ## Key boundaries
 
-- MCP-callable code and pure Python never mix (D-014). The snapshot file is the interface between them.
+- A trade is Active BSL iff it's in the registry (D-018). Date-based tagging was falsified by real post-cutoff non-BSL activity on day one.
+- Risk is anchored to NLV, never buying power; Portfolio Margin headroom appears as informational feasibility only (D-019).
+- Execution is always human (D-003). Nothing in this codebase transmits, blocks, or enforces.
 - The risk framework's constants live in one module, documented against `planning/DOMAIN.md`.
-- Execution is always human (D-003). Nothing in this codebase transmits an order.
 
 ## Future (per roadmap, not yet authorized)
 
-Sprint 003 (likely): Active-vs-Legacy ledger tracker off `get_account_trades` + D-001 cutoff → enables daily/weekly/monthly loss-budget checks. Then: parser migration with fixture tests; observability TUI (framework per Q-002); order staging integration.
+Parser migration with the 87-PDF fixture corpus; observability TUI (framework per Q-002); order-staging integration (write side of the connector, human-transmitted).

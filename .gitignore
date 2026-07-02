@@ -7,8 +7,10 @@ build/
 dist/
 .venv/
 
-# Live account data — never commit real snapshots
+# Live account data — never commit real snapshots or the trade registry
 data/account_snapshot.json
+data/trades_snapshot.json
+data/bsl_registry.json
 
 # macOS
 .DS_Store

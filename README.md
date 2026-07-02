@@ -63,6 +63,48 @@ code is never shipped untested.
 
 ---
 
+## Quick Start — Active BSL Ledger (Sprint 003)
+
+`bsl-ledger`: realized P&L for **registered** Active BSL trades vs the
+daily 1% / weekly 3% / monthly 5% loss caps (of NLV). **Informational
+only — it warns, it never blocks (D-003).**
+
+### Register a trade (D-018: registry membership defines Active BSL)
+
+```bash
+# At sizing time (recommended):
+bsl-size NOW --direction long --entry 105.57 --stop 104.59 --tier base \
+  --nlv 3890000 --existing-value 0 --register
+
+# Or manually, after the fact (ET date):
+PYTHONPATH=src python3 -m bsl_coach.cli_ledger tag NOW --date 2026-07-01
+PYTHONPATH=src python3 -m bsl_coach.cli_ledger list
+```
+
+### Run a report
+
+A Claude session fetches fills + NLV via the IBKR MCP connector and writes
+`data/trades_snapshot.json` and `data/account_snapshot.json`
+(see `samples/`); then:
+
+```bash
+PYTHONPATH=src python3 -m bsl_coach.cli_ledger report
+```
+
+Output: TODAY / WTD / MTD realized P&L vs caps with usage % (WARNING at
+≥ 75%, STAND DOWN messaging at ≥ 100%), closed episodes, open registered
+positions (unrealized is info only), and a review list of anything that
+did not match a registered setup — nothing is ever auto-classified.
+Add `--json` for machine-readable output.
+
+Exit codes: `0` OK (including warnings), `4` snapshot/registry problem,
+`5` a loss cap is at ≥ 100% (report still prints).
+
+Full flow: **`docs/LEDGER_RECIPE.md`**. All bucketing is
+America/New_York (D-021); real snapshots and the registry are git-ignored.
+
+---
+
 ## Purpose
 
 This project folder was created by the 120x Project Launcher for the 120x Architect / Builder workflow.

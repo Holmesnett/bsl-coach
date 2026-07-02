@@ -11,8 +11,13 @@ Schema (versioned for future migration):
       "schema": "bsl-snapshot-1",
       "as_of": "2026-07-01T13:05:00Z",        # UTC ISO8601
       "nlv": 3890000,
-      "positions": {"NOW": 105570.00}          # symbol -> market value
+      "positions": {"NOW": 105570.00},         # symbol -> market value
+      "available_funds": 2100000               # optional; informational (D-019)
     }
+
+``available_funds`` was added (optionally) in Sprint 003 for the
+ledger's informational margin-feasibility line (D-019). Snapshots
+without it remain fully valid — Sprint 002 behavior is unchanged.
 """
 
 from __future__ import annotations
@@ -40,6 +45,7 @@ class Snapshot:
     positions: dict[str, Decimal] = field(default_factory=dict)
     as_of: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     path: Path | None = None
+    available_funds: Decimal | None = None  # informational only (D-019)
 
     def age(self, now: datetime | None = None) -> timedelta:
         now = now or datetime.now(timezone.utc)
@@ -127,4 +133,14 @@ def load_snapshot(path: Path | str = DEFAULT_PATH) -> Snapshot:
             raise SnapshotError(f"snapshot position symbol invalid: {symbol!r}")
         positions[symbol.upper()] = _decimal_value(f"positions[{symbol}]", value)
 
-    return Snapshot(nlv=nlv, positions=positions, as_of=as_of, path=path)
+    available_funds: Decimal | None = None
+    if data.get("available_funds") is not None:
+        available_funds = _decimal_value("available_funds", data["available_funds"])
+
+    return Snapshot(
+        nlv=nlv,
+        positions=positions,
+        as_of=as_of,
+        path=path,
+        available_funds=available_funds,
+    )

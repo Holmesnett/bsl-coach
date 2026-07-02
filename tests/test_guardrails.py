@@ -40,3 +40,16 @@ def test_no_network_or_broker_imports_in_src():
             if f"import {mod}" in text or f"from {mod}" in text:
                 offenders.append(f"{path}: imports {mod}")
     assert not offenders, "\n".join(offenders)
+
+
+def test_guardrail_scan_covers_sprint_003_modules():
+    """A-008: the greps above must actually be scanning the ledger modules.
+
+    Guards against src-layout drift silently exempting new code."""
+    scanned = {p.name for p in SRC.rglob("*.py")}
+    expected = {
+        "risk_math.py", "snapshot.py", "cli.py",  # Sprint 002
+        "registry.py", "trades.py", "ledger.py", "cli_ledger.py",  # Sprint 003
+    }
+    missing = expected - scanned
+    assert not missing, f"guardrail scan is missing modules: {sorted(missing)}"

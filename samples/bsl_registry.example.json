@@ -1,0 +1,29 @@
+{
+  "schema": "bsl-registry-1",
+  "entries": [
+    {
+      "id": "2026-07-01-NOW-1",
+      "symbol": "NOW",
+      "direction": "long",
+      "registered_at": "2026-07-01T14:55:00Z",
+      "entry": "105.57",
+      "stop": "104.59",
+      "tier": "base",
+      "shares_sized": 1602,
+      "status": "active",
+      "note": ""
+    },
+    {
+      "id": "2026-07-02-ABC-1",
+      "symbol": "ABC",
+      "direction": "long",
+      "registered_at": "2026-07-02T04:00:00Z",
+      "entry": null,
+      "stop": null,
+      "tier": null,
+      "shares_sized": null,
+      "status": "active",
+      "note": "manual tag (bsl-ledger tag ABC --date 2026-07-02)"
+    }
+  ]
+}
