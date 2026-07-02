@@ -1,0 +1,25 @@
+# Decisions
+
+Record durable decisions future sprints must respect. Newest at the bottom.
+
+---
+
+## Decision Log
+
+| # | Date | Decision | Reason | Impact |
+|---|---|---|---|---|
+| D-001 | 2026-07-01 | Active BSL vs Legacy P&L cutoff date is **2026-07-01** | Day of the first tagged BSL trade (NOW long 1000 @ $105.57) | Trades opened before the cutoff = Legacy (MTM only, not governed by risk caps); on/after = Active BSL (governed by the risk framework) |
+| D-002 | 2026-07-01 | Risk framework is **percentage-based**, auto-scaling with NLV | $4M → $10M+ transition after the Dec 9 2026 SPCX lockup shouldn't require re-engineering | Caps scale automatically; explicit human review scheduled at lockup expiry (Q-006) |
+| D-003 | 2026-07-01 | **Trade execution stays manual, always.** The system may stage bracket orders via `create_order_instruction` (IBKR Desktop → Review Instructions tab) but never transmits | Live account, real capital; human-in-the-loop is the safety boundary | No sprint may ship auto-transmit. Hard rule for every Builder |
+| D-004 | 2026-07-01 | Discord setups arrive via **paste-based intake** in v1 | No Discord MCP in Anthropic's vetted registry | v2 may add a webhook receiver if volume warrants (Q-004) |
+| D-005 | 2026-07-01 | Pine Script transfer via **`pbcopy` + manual paste** in v1 | TradingView has no public API | Claude-in-Chrome automation is a v2 question (Q-005) |
+| D-006 | 2026-07-01 | **One canonical project folder:** `~/Documents/Claude/Projects/bsl-coach`, iCloud-shared; one Cowork project ("BSL Coach"); STATE.md is the cross-device handoff | Dave works on MacBook Pro now, Mac Studio ~90% once built; duplicate projects caused confusion on 2026-07-01 | Update STATE.md before switching machines; the folder, not any chat, is the source of truth |
+| D-007 | 2026-07-01 | Version control in **private GitHub repo** `https://github.com/Holmesnett/bsl-coach.git` | Audit trail; safety net beyond iCloud sync | Push before device switches once code exists |
+| D-008 | 2026-07-01 | **Fable 5 runs both roles** — Architect (Cowork) and Builder (terminal) | Dave wants Architect and Builder on the same model | Handoff remains the folder, not the conversation |
+| D-009 | 2026-07-01 | **Hybrid rigor tier:** Micro-app everywhere EXCEPT money-touching code, which gets a raised validation bar | Single user, but every output informs a live-money decision on a ~$4M account | Any code computing sizes, stops, risk budgets, or NLV math needs real tests: happy path + edge cases (zero stop distance, entry crossing stop, share-count float boundaries, NLV absent/stale). Reflected in every money-touching sprint's acceptance criteria |
+| D-010 | 2026-07-01 | **Sprint 002 = position sizing calculator** (chosen over parser hardening and observability TUI) | It's the piece that touches money; protects against a sizing mistake under time pressure | Parser migration into `src/` and the TUI are later sprints |
+| D-011 | 2026-07-01 | Calculator interface: **CLI core + conversational wrapper** | Testable CLI (`bsl-size ...`) holds the math; Claude in Cowork can fetch live NLV via the IBKR MCP and invoke it | Math is formally testable; 9:25am ergonomics stay conversational |
+| D-012 | 2026-07-01 | Sprint 002 checks: **per-trade tiers + $50K hard cap + 5% concentration only.** Daily/weekly/monthly loss budgets deferred | Loss budgets require the Active-vs-Legacy trade-tagging tracker (`get_account_trades` + D-001 cutoff) — a meaningfully bigger build | Ledger tracker + budget checks become their own sprint |
+| D-013 | 2026-07-01 | Sprint 002 output: **numbers only** — no `create_order_instruction` staging | Trust the math before touching the connector's write side | Order staging is a later sprint, after the calculator has proven itself in live mornings |
+| D-014 | 2026-07-01 | **IBKR MCP connector is the primary account-data path; IB Gateway/`ib_insync` is fallback.** The connector lives in the Claude runtime only — standalone Python cannot call MCP tools | Connector confirmed live in Cowork 2026-07-01 | Pure-Python code takes account data as inputs (CLI flags or snapshot file); a Claude session or Dave supplies live values. Gateway path reserved for a future standalone TUI |
+| D-015 | 2026-07-01 | The May 2026 "BSL Trading Dashboard" repo (textual TUI, Sprint-001-era) is **abandoned, not a dependency** | Pre-dated the IBKR connector and the two-ledger framework; over-complicated per Dave | Do not restore, reference, or pattern-match against it. The future TUI sprint designs fresh against the MCP tools |
