@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+
+# Live account data — never commit real snapshots
+data/account_snapshot.json
+
+# macOS
+.DS_Store

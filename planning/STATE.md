@@ -2,30 +2,31 @@
 
 **Project:** BSL Coach
 **Client:** Hudson Mac Cayman Holding Company
-**Last updated:** 2026-07-01 (Architect Pack 001 applied)
+**Last updated:** 2026-07-01 (Sprint 002 Builder work complete; A-011 pending)
 
 ---
 
 ## Current Phase
 
-Build — Sprint 002 (Position Sizing Calculator)
+Build — Sprint 002 (Position Sizing Calculator) — **code complete, awaiting Dave's A-011 live smoke test**
 
-Discovery / Architecture (Sprint 001) is complete. This pack is its output.
+Discovery / Architecture (Sprint 001) is complete.
 
 ---
 
 ## Current Status
 
 - Canonical project folder: `~/Documents/Claude/Projects/bsl-coach` (iCloud-shared between MacBook Pro and Mac Studio; single Cowork project named "BSL Coach" points at it).
-- Discovery complete: planning files populated, 15 decisions recorded, Sprint 002 specified.
+- Git initialized 2026-07-01; remote `https://github.com/Holmesnett/bsl-coach.git` (D-007); initial scaffold commit + Sprint 002 commit pushed.
+- **Sprint 002 shipped:** `src/bsl_coach/` (risk_math / snapshot / cli), 81 tests green, A-001..A-010 verified with commands documented in `planning/sprints/002-position-sizing-calculator/CLOSEOUT.md`. D-016 recorded.
+- **A-011 open:** Dave runs one real morning sizing (recipe in `docs/SIZING_RECIPE.md`) and checks against hand math; record sign-off in CLOSEOUT.md and here.
 - Working parser (`pm_pdf_to_pine.py`) still lives in a separate Cowork outputs directory — in daily use since 2026-06-16, migrates into `src/` in a later sprint (see D-010 alternatives).
-- No application code in `src/` yet. Sprint 002 authorizes the first implementation work.
 
 ## Active Sprint
 
 `planning/sprints/002-position-sizing-calculator/`
 
-Sprint 002 — Position Sizing Calculator (CLI core + conversational wrapper; tiers + caps only; numbers only, no order staging).
+Sprint 002 — Position Sizing Calculator. Builder phase done; sprint closes on A-011 sign-off.
 
 ## Live-account context
 
@@ -35,9 +36,8 @@ Sprint 002 — Position Sizing Calculator (CLI core + conversational wrapper; ti
 
 ## Next Actions
 
-1. Initialize git in the project folder (if not already) and set remote to `https://github.com/Holmesnett/bsl-coach.git` (D-007); first push.
-2. Builder reads `planning/sprints/002-position-sizing-calculator/` (all four files) and implements.
-3. On sprint completion: update this file, DECISIONS.md, FILE_INVENTORY.md, docs/; push.
+1. **Dave: A-011 live smoke test** — one real morning sizing via `docs/SIZING_RECIPE.md` (or manual flags), sanity-check against hand math, record sign-off in sprint 002 CLOSEOUT.md and here.
+2. On A-011 sign-off, Sprint 002 closes; Architect specifies the next sprint (likely the Active-vs-Legacy ledger tracker per D-012 / ARCHITECTURE.md roadmap).
 
 ## Blockers
 

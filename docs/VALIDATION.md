@@ -6,10 +6,11 @@ Micro-app rigor everywhere except money-touching code. Money-touching = anything
 
 ## Sprint 002 validation
 
-- `python3 -m pytest` — full suite green is the gate.
-- Money math in `Decimal`; tests include float-wobble boundary cases.
-- Out-of-scope guard: grep `src/` for `create_order_instruction`, `ib_insync`, `mcp__` — zero hits.
-- A-011 live smoke test: Dave runs one real-morning sizing and checks it against hand math before the calculator is trusted in the daily workflow.
+- `PYTHONPATH=src python3 -m pytest` — full suite green is the gate. **Status 2026-07-01: 81 passed.**
+- Money math in `Decimal`; tests include float-wobble boundary cases (`tests/test_risk_math.py::TestFloorBoundaries`).
+- Out-of-scope guard: grep `src/` for `create_order_instruction`, `ib_insync`, `mcp__` — zero hits. Now scripted permanently as `tests/test_guardrails.py` (runs with the suite).
+- A-001..A-010 verified 2026-07-01 with commands documented in `planning/sprints/002-position-sizing-calculator/CLOSEOUT.md`.
+- A-011 live smoke test: Dave runs one real-morning sizing and checks it against hand math before the calculator is trusted in the daily workflow. **Pending sign-off.**
 
 ## Standing rules
 

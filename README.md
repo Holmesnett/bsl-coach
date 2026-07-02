@@ -7,6 +7,62 @@
 
 ---
 
+## Quick Start — Position Sizing Calculator (Sprint 002)
+
+The first shipped tool: `bsl-size`, a risk-based position sizing CLI.
+Numbers only — it never stages or transmits orders.
+
+### Install
+
+Stdlib-only at runtime; pytest for tests. Either run in place:
+
+```bash
+cd ~/Documents/Claude/Projects/bsl-coach
+PYTHONPATH=src python3 -m bsl_coach.cli --help
+```
+
+or install editable to get `bsl-size` on PATH:
+
+```bash
+pip install -e .
+bsl-size --help
+```
+
+### First sizing (offline, all flags)
+
+```bash
+PYTHONPATH=src python3 -m bsl_coach.cli NOW \
+  --direction long --entry 105.57 --stop 104.59 --tier base \
+  --nlv 3890000 --existing-value 0
+```
+
+Output: exact share count, position value, dollar risk, concentration %,
+every cap check (hard $50K cap, 5% concentration), and the binding
+constraint. Add `--json` for machine-readable output.
+
+Tiers (per `planning/DOMAIN.md`): `base` 0.10% / `medium` 0.15% /
+`high` 0.20% / `max` 0.25% of NLV. The tier is always your input — never
+derived.
+
+### With live account data
+
+A Claude session fetches NLV + positions via the IBKR MCP connector and
+writes `data/account_snapshot.json` (see `samples/account_snapshot.example.json`);
+then `--nlv`/`--existing-value` can be omitted. Full flow:
+**`docs/SIZING_RECIPE.md`**. Snapshots older than 60 minutes trigger a loud
+staleness warning. Real snapshots are git-ignored.
+
+### Tests
+
+```bash
+PYTHONPATH=src python3 -m pytest
+```
+
+The risk math carries a mandatory edge-case matrix (D-009) — money-touching
+code is never shipped untested.
+
+---
+
 ## Purpose
 
 This project folder was created by the 120x Project Launcher for the 120x Architect / Builder workflow.

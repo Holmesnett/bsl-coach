@@ -5,7 +5,7 @@
 Local, file-based Python on macOS. No web framework, no database, no daemon. Three layers:
 
 1. **Claude runtime (Cowork / Claude sessions)** — the only place MCP tools exist. Fetches live account data via the IBKR MCP connector, refreshes `data/account_snapshot.json`, invokes CLIs, relays results. Later sprints: stages orders via `create_order_instruction` (human-transmitted always, D-003).
-2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002: `risk_math`, `snapshot`, `cli`. Later sprints add: parser (migrated `pm_pdf_to_pine.py`), ledger/tagging tracker, TUI dashboard.
+2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002 (shipped 2026-07-01): `risk_math` (Decimal tier/cap math, `SizingResult`, typed exceptions incl. `NoViableSizeError`), `snapshot` (versioned `bsl-snapshot-1` schema, staleness at ≥ 60 min), `cli` (`bsl-size`, exit codes 0/2/3/4). Later sprints add: parser (migrated `pm_pdf_to_pine.py`), ledger/tagging tracker, TUI dashboard.
 3. **External surfaces** — TradingView (Pine scripts via `pbcopy`), IBKR Desktop (manual execution; Review Instructions tab for staged orders), iCloud (folder sync), GitHub (version control).
 
 ## Data flow (Sprint 002 slice)

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bsl-coach"
+version = "0.1.0"
+description = "BSL Coach — risk-based position sizing calculator (numbers only, never orders)"
+requires-python = ">=3.10"
+# stdlib only at runtime by design (Sprint 002 blueprint); pytest for tests.
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+bsl-size = "bsl_coach.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
