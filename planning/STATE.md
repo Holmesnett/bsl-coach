@@ -2,7 +2,7 @@
 
 **Project:** BSL Coach
 **Client:** Hudson Mac Cayman Holding Company
-**Last updated:** 2026-07-01 (Sprint 003 CLOSED — A-011 signed off; Sprint 002 A-011 still pending)
+**Last updated:** 2026-07-01 late evening (Mac Studio session: readiness verified; no sprint work)
 
 ---
 
@@ -43,6 +43,23 @@ closes on its A-011 sign-off.
 
 1. Dave: Sprint 002 A-011 — one real morning sizing vs hand math; record in sprint 002 CLOSEOUT.md and here.
 2. Next Architect conversation picks the next sprint: parser migration vs observability TUI.
+
+## Mac Studio session — 2026-07-02 (Architect) — first full morning routine
+
+- Morning loop ran end-to-end and is now OPERATIONAL: PDF filed (D-017 script, HOME override for sandbox) + call transcript filed alongside → setups extracted → snapshots written → board presented → Pine watchlist indicator generated (`pine/bsl_pm_watchlist_2026-07-02.pine`, symbol-aware, one saved TV script + "Apply to all charts in layout", 5-min-close entry alerts via alert()).
+- Zero trades (deliberate sit-out day to build workflow). Ledger TODAY $0, WTD +$458.61. NLV drifted $3.87M → $3.71M midday (legacy MTM).
+- New standing artifacts: `journal/YYYY-MM-DD.md` (daily journal, seeded manually — Sprint 004 will automate the quantitative half), `journal/watchlist.md` (developing-setups index), `journal/tickers/{TICKER}.md` (per-ticker level maps w/ Set dates; history via git diffs; future parser sprint can generate Pine from these). Pine title kept stable ("BSL PM Watchlist") for daily paste-over.
+- Teaching threads done live: stop = structure / size = risk / conflict = pass; tier rubric (Pass/C/B/A, max needs two votes, ceiling ~base for first 20-30 trades); five setup states observed in one session (BB walk-through, PLTR retest, HOOD blow-through, COIN runner, WEN failed KL).
+- Pending: Sprint 002 A-011 (one real morning sizing vs hand math) — do next morning as dry run. Premarket-BSL variant to be specced + paper-tracked before any capital (Dave's request after HOOD). True 4pm EOD pass proposed as scheduled task.
+- Machine notes: PDF read via host Read (triggers iCloud materialization); `.git/index.lock` still present — remove before next commit; journal/, pine/ dirs are new and uncommitted.
+
+## Mac Studio session — 2026-07-01 late evening (Architect)
+
+- D-023 verified on Mac Studio: git local main == origin (`c4a6c3e`, one past `4302391`); 202 tests green; IBKR connector live (NLV $3,819,828.43, matches); `bsl-ledger report` reproduces NOW +$458.61 with 31 review-list fills. Downloads grant in place.
+- iCloud dataless files bit this machine (R-005): sandbox reads failed until host-side reads forced downloads. Recommended one-time fix: `brctl download ~/Documents/Claude/Projects/bsl-coach`; keep Optimize Mac Storage off.
+- **Stale `.git/index.lock` left in repo** (sandbox mount can't unlink). Will block next commit; remove with `rm .git/index.lock` first.
+- 3 untracked PDFs in `references/client-docs/` (05_14 "-2" dup, 05_15, 05_20) — add or delete at next commit. Also `07_01_2026 PM Planning 2.pdf` is byte-identical to the filed 07/01 PDF.
+- Teaching thread open: stop-loss selection (structure sets stop, risk sets size). Walked QQQ/NOW examples off the 07/01 sheet; Dave wants to continue live on the next morning's sheet. Pairs naturally with Sprint 002 A-011 (one real morning sizing vs hand math).
 
 ## Blockers
 
