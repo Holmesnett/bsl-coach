@@ -52,6 +52,7 @@ closes on its A-011 sign-off.
 - Teaching threads done live: stop = structure / size = risk / conflict = pass; tier rubric (Pass/C/B/A, max needs two votes, ceiling ~base for first 20-30 trades); five setup states observed in one session (BB walk-through, PLTR retest, HOOD blow-through, COIN runner, WEN failed KL).
 - Pending: Sprint 002 A-011 (one real morning sizing vs hand math) — do next morning as dry run. Premarket-BSL variant to be specced + paper-tracked before any capital (Dave's request after HOOD). True 4pm EOD pass proposed as scheduled task.
 - Machine notes: PDF read via host Read (triggers iCloud materialization); `.git/index.lock` still present — remove before next commit; journal/, pine/ dirs are new and uncommitted.
+- **EOD pass (scheduled task) ran 7/2 ~16:20 ET:** ledger clean (exit 0, TODAY $0 / WTD +$458.61, no warnings); 1 fill today (recurring PURR → review list); NLV closed $3,620,674.81 (−$253.8K on day, all legacy MTM); broad PM fade — HOOD and CRCL lost their KLs on the close, BB failed KL −9.9%, MSTR alone held (100.60); journal EOD section + 3 ticker files + watchlist index updated.
 
 ## Mac Studio session — 2026-07-01 late evening (Architect)
 
