@@ -28,7 +28,7 @@ one real morning sizing vs hand math — scheduled for Monday 2026-07-06.**
 - **New standing artifacts (2026-07-02):** `journal/YYYY-MM-DD.md` daily journals; `journal/watchlist.md` + `journal/tickers/{TICKER}.md` (per-ticker level maps, "Set" dates, dead-if lines, git-diff history); `pine/bsl_pm_watchlist_YYYY-MM-DD.pine` dated Pine outputs (stable indicator title "BSL PM Watchlist").
 - **Scheduled automations (Cowork runtime, not src/):** `eod-trading-recap` (weekdays 4:15p ET) and `premarket-watchlist-scan` (weekdays 7:45a ET) — both read/write journal files; neither touches src/ or places orders.
 - PM Planning fixture corpus: **90 PDFs** in `references/client-docs/` (May 2025 – Jul 2026) + call-transcript markdowns. Q-010 archive feature lands in this sprint.
-- Working parser `pm_pdf_to_pine.py` (daily use since 2026-06-16) still lives OUTSIDE the repo — **Dave copies it to `references/legacy-parser/` before the Builder starts** (prior art only; Builder implements fresh).
+- Working parser `pm_pdf_to_pine.py` (daily use since 2026-06-16) lives on the MacBook Pro, outside the repo. **Optional** prior art: Dave copies it to `references/legacy-parser/` if/when found; the Builder proceeds without it (blueprint + corpus sweep are the authority — Architect decision 2026-07-02).
 
 ## Active Sprint
 
@@ -42,8 +42,8 @@ one real morning sizing vs hand math — scheduled for Monday 2026-07-06.**
 
 ## Next Actions
 
-1. Dave: copy `pm_pdf_to_pine.py` (+ 1–2 of its dated .pine outputs) into `references/legacy-parser/`.
-2. Builder (Claude Code): apply this pack (`node scripts/apply-architect-pack.js`), then execute Sprint 004 from `planning/sprints/004-pm-parser/`.
+1. Builder (Claude Code): apply this pack (`node scripts/apply-architect-pack.js`), then execute Sprint 004 from `planning/sprints/004-pm-parser/`. Legacy parser is OPTIONAL prior art (see handoff) — do not block on it.
+2. Dave (whenever next on the MacBook Pro): Spotlight "pm_pdf_to_pine", copy into `references/legacy-parser/` if found — useful but not required.
 3. Monday 7/6: A-011 sizing dry-run (closes Sprint 002); Sprint 004's live acceptance (A-010) runs on the first real PDF after code-complete.
 4. After Sprint 004: journaling automation (Q-011) is the leading Sprint 005 candidate.
 
@@ -324,10 +324,15 @@ D-017 govern here), `planning/DOMAIN.md`, `planning/memory/
 dashboard-chart-no-overlap.md`, then all four files in
 `planning/sprints/004-pm-parser/`. Implement from the sprint files only.
 
-Prerequisite check: `references/legacy-parser/pm_pdf_to_pine.py` must exist
-(Dave copies it in). It is PRIOR ART ONLY — read it for parsing insights on
-older PDF formats, but implement fresh in `src/bsl_coach/` per the blueprint.
-If it is missing, stop and flag rather than guessing at legacy behavior.
+Optional prior art: if `references/legacy-parser/pm_pdf_to_pine.py` exists,
+read it for parsing insights on older PDF formats — but implement fresh in
+`src/bsl_coach/` per the blueprint either way. If it is ABSENT (it lives on
+Dave's other machine and may arrive mid-sprint or not at all — Architect
+decision 2026-07-02): proceed without it; the blueprint's golden values +
+parsing notes + the corpus sweep are the authority. Note its absence in
+CLOSEOUT. If the sweep shows high unrecognized-bullet rates on older PDFs,
+report the shapes verbatim and flag for the Architect — never guess at
+legacy behavior.
 
 Build: pm_parser.py, pine_gen.py, board_gen.py, cli_pm.py (`bsl-pm`), the
 fixture set, the corpus sweep, and docs/PARSER_RECIPE.md.
