@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "phase": "build",
-  "sprint": "003-active-bsl-ledger (CLOSED 2026-07-01; A-011 signed off)",
-  "updated": "2026-07-01"
+  "phase": "awaiting-approval",
+  "sprint": "004-pm-parser",
+  "updated": "2026-07-03T00:39:29Z"
 }

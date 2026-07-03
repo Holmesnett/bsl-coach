@@ -4,30 +4,38 @@
 
 Local, file-based Python on macOS. No web framework, no database, no daemon. Three layers:
 
-1. **Claude runtime (Cowork / Claude sessions)** — the only place MCP tools exist. Fetches live account data via the IBKR MCP connector and refreshes the snapshot files; invokes CLIs; relays results. Later sprints: stages orders via `create_order_instruction` (human-transmitted always, D-003).
-2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002: `risk_math`, `snapshot`, `cli` (`bsl-size`). Sprint 003: `registry`, `trades`, `ledger`, `cli_ledger` (`bsl-ledger`). Later: parser (migrated `pm_pdf_to_pine.py`), TUI dashboard.
-3. **External surfaces** — TradingView (Pine via `pbcopy`), IBKR Desktop (manual execution; Review Instructions tab for future staged orders), iCloud (folder sync), GitHub (version control).
+1. **Claude runtime (Cowork / Claude sessions / scheduled tasks)** — the only place MCP tools exist. Fetches live account data via the IBKR MCP connector and refreshes the snapshot files; invokes CLIs; relays results; runs the premarket scan (7:45a ET) and EOD recap (4:15p ET) scheduled tasks that maintain journal files. Later sprints: stages orders via `create_order_instruction` (human-transmitted always, D-003).
+2. **Pure Python (`src/bsl_coach/`)** — testable logic with zero network access (D-014). Sprint 002: `risk_math`, `snapshot`, `cli` (`bsl-size`). Sprint 003: `registry`, `trades`, `ledger`, `cli_ledger` (`bsl-ledger`). Sprint 004: `pm_parser`, `pine_gen`, `board_gen`, `cli_pm` (`bsl-pm`). Later: TUI dashboard (open question Q-002).
+3. **External surfaces** — TradingView (generated Pine via `pbcopy` + paste over one saved indicator, D-005), IBKR Desktop (manual execution), iCloud (folder sync), GitHub (version control).
 
 ## Snapshot-file interface (D-014 / D-020)
 
-MCP-callable code and pure Python never mix. Claude sessions write:
+Claude sessions write `data/account_snapshot.json` (`bsl-snapshot-1`) and
+`data/trades_snapshot.json` (`bsl-trades-1`); git-ignored, versioned,
+staleness-checked; CLI flags override.
 
-- `data/account_snapshot.json` (`bsl-snapshot-1`) — NLV + per-symbol market values (from `get_account_summary` / `get_account_positions`), plus optional `available_funds` for the informational D-019 margin line.
-- `data/trades_snapshot.json` (`bsl-trades-1`) — raw fills (from `get_account_trades`); UTC fill times convert to ET at ingest (D-021).
+## Data flow (morning)
 
-Both are git-ignored, versioned-schema, staleness-checked. Explicit CLI flags always override. The BSL registry (`data/bsl_registry.json`, `bsl-registry-1`, D-018) is likewise git-ignored and written only by `bsl-size --register` / `bsl-ledger tag|untag`.
-
-## Data flow
-
-PM PDF → (external parser, pre-migration) → Pine script → TradingView. Sizing: Claude refreshes account snapshot → `bsl-size` → share count + cap checks (+ optional `--register` tags the trade as BSL, D-018). Ledger: Claude refreshes trades snapshot → `bsl-ledger` → episode P&L split Active-BSL vs everything-else, ET-bucketed (D-021), budget usage vs 1%/3%/5% caps — warnings only, never enforcement.
+PM PDF lands → `bsl-pm parse` (bsl-pmplan-1 JSON, PDF archived to
+data/pdf_archive/) → `bsl-pm pine --copy` (dated Pine, pasted over the saved
+"BSL PM Watchlist" TV indicator; alerts re-armed by hand) + `bsl-pm board`
+(markdown into the day's journal). Sizing: Claude refreshes account snapshot →
+`bsl-size` (+`--register` tags BSL trades, D-018). Ledger: Claude refreshes
+trades snapshot → `bsl-ledger` (episodes, ET buckets D-021, budget usage —
+warnings only). Journal/watchlist homework files in `journal/` are
+human-curated; scheduled tasks update them from live data, `src/` never does.
 
 ## Key boundaries
 
-- A trade is Active BSL iff it's in the registry (D-018). Date-based tagging was falsified by real post-cutoff non-BSL activity on day one.
-- Risk is anchored to NLV, never buying power; Portfolio Margin headroom appears as informational feasibility only (D-019).
-- Execution is always human (D-003). Nothing in this codebase transmits, blocks, or enforces.
-- The risk framework's constants live in one module, documented against `planning/DOMAIN.md`.
+- A trade is Active BSL iff registered (D-018). Risk anchors to NLV, never
+  buying power (D-019). Execution always human (D-003); nothing transmits,
+  blocks, or enforces.
+- Parser tolerance: unknown watchlist bullet shapes surface in parse reports
+  (`unparsed`), never silently dropped; corpus sweep tracks format drift.
+- Chart layers carry no tabular/info panels (dashboard-chart-no-overlap).
 
-## Future (per roadmap, not yet authorized)
+## Future (not yet authorized)
 
-Parser migration with the 87-PDF fixture corpus; observability TUI (framework per Q-002); order-staging integration (write side of the connector, human-transmitted).
+Journaling automation (Q-011, Sprint 005 candidate); observability TUI
+(Q-002); transcript parsing; premarket-BSL variant (paper-track first);
+order-staging integration last (D-013).
