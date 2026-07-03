@@ -29,10 +29,12 @@ BTC >$60k, MSTR/CRCL/COIN bid. 52w high 139.75 overhead.
 - **Dead if:** closes back inside the base under ~111 (gap fill to 108.65 likely magnet).
 
 ## Catalyst log (newest first)
+- 7/2 AH: **Q2 earnings scheduled July 29** (binary event, 4 weeks out — flag for any multi-day hold). Uniswap live on Robinhood Chain — 24/7 tokenized AAPL/NVDA trading.
 - 7/2: Mizuho maintains Outperform, PT $115→$130. Eightco (ORBS) discloses ~$386M incl. ETH exposure noise.
 - 7/1: "The World is Flat" event — Robinhood Chain L2 launch, partner wave (Chainlink, BitGo, Morpho, Maple, 0x, dYdX perps). DB $113, GS $121, BTIG $125. Stock +8.35% on 28.1M.
 - Backdrop: golden cross forming (50/200 EMA ~89.5/90.1), record June volumes, PDT rule ended.
 
 ## Review log
+- 7/2 evening (Dave, written pre-open for 7/3): Keep on close watch. Multi-month structure is level-rich and the June advance was orderly — good ladder to build trades from. 124 (Jan shelf) is the upside level of interest IF the ladder reclaims in order: 111 holds → 112.43 reclaimed → 115.15 → 117.76 → 120 → then 124 is live. Below: 111 is the first thing to watch at the 7/3 open; loss targets the 108.65 gap fill.
 - 7/2 EOD: The 112.43 retest came in the afternoon and did not hold — closed 111.78, a full round-trip of the breakout day (still +2.88%). 111.00 held by pennies (LOD 110.93). Level map intact but the "retest is the trade" setup failed its first test on a closing basis; the dead-if line (close inside base under ~111) is now one bad open away, with 108.65 gap fill the magnet. Status column updated on 112.43 and 111.00 rows accordingly.
 - 7/2: Blow-through open (9:30 bar consumed KL→T2), ran to 120.05, faded below T1 by 11:30. No risk-defined entry existed after open; retest of 112.43 is the trade if it comes. Dave's premarket confluence thesis was correct but unwritten pre-open — journal rule adopted.
