@@ -63,6 +63,11 @@ closes on its A-011 sign-off.
   Risks R-012/R-013/R-014 recorded; TV panel confirmed broker-disconnected.
   **Next session after the Claude restart: run the verification section, then
   record the result here.**
+- Flip progress (Mac Studio, ~10:30 ET): bridge cloned + pinned + npm-installed
+  at `~/tools/tradingview-mcp`; Claude config merged (`tradingview` added,
+  `unusualwhales` preserved, `.bak` saved); repo pushed (`8902448`). Remaining:
+  Claude restart → TV debug launch (script) → 4-step verification. Reminder:
+  debug flag is per-launch — Dock-launched TV = port closed = bridge off.
 - Sprint 002 A-011 still open (no sizing yet as of ~10:00 ET; morning watched:
   AAPL through KL premarket-ish, AVGO gapped past entry, GLW/WULF knocking).
 
