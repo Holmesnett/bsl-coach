@@ -2,7 +2,7 @@
 
 **Project:** BSL Coach
 **Client:** Hudson Mac Cayman Holding Company
-**Last updated:** 2026-07-01 late evening (Mac Studio session: readiness verified; no sprint work)
+**Last updated:** 2026-07-06 morning (Architect: morning routine + TV-MCP prep; Claude-app restart planned midday)
 
 ---
 
@@ -44,6 +44,26 @@ closes on its A-011 sign-off.
 1. Dave: Sprint 002 A-011 — one real morning sizing vs hand math; record in sprint 002 CLOSEOUT.md and here.
 2. Next Architect conversation picks the next sprint: parser migration vs observability TUI.
 
+## Session — 2026-07-06 morning (Architect) — morning routine + TradingView MCP prep
+
+- Morning routine ran clean: 7/6 PDF + call transcript filed; snapshots refreshed
+  (NLV $3,684,758.86, 9:26 ET); `bsl-ledger report` exit 0 — TODAY/WTD $0, MTD
+  +$458.61, review list 8 expected legacy fills; Pine watchlist regenerated
+  (8 names: QQQ·MU PM-BSL paper-only, AAPL 308.26, AVGO 374, WULF 24.90, GLW 202,
+  INTC 125, SPCX 166) and journal updated. Premarket scheduled scan had already
+  flagged MSTR dead-if LIVE (Strategy sold 3,588 BTC, $8.32B Q2 loss).
+- Pine fix shipped: level drawing moved from bar-0 anchor to last-bar anchor
+  (extend.both) — bar-0 drawings silently die on deep-history symbols (QQQ).
+  Carry this pattern into all future generated scripts.
+- **TV-MCP (D-024) prepped, NOT yet installed:** Dave chose midday flip.
+  Runbook = `docs/TV_MCP_SETUP.md` (install commands, Claude config, launch,
+  4-step verification, rollback). Repo security-reviewed at pinned `c34dfd5`.
+  Risks R-012/R-013/R-014 recorded; TV panel confirmed broker-disconnected.
+  **Next session after the Claude restart: run the verification section, then
+  record the result here.**
+- Sprint 002 A-011 still open (no sizing yet as of ~10:00 ET; morning watched:
+  AAPL through KL premarket-ish, AVGO gapped past entry, GLW/WULF knocking).
+
 ## Mac Studio session — 2026-07-02 (Architect) — first full morning routine
 
 - Morning loop ran end-to-end and is now OPERATIONAL: PDF filed (D-017 script, HOME override for sandbox) + call transcript filed alongside → setups extracted → snapshots written → board presented → Pine watchlist indicator generated (`pine/bsl_pm_watchlist_2026-07-02.pine`, symbol-aware, one saved TV script + "Apply to all charts in layout", 5-min-close entry alerts via alert()).
@@ -52,6 +72,7 @@ closes on its A-011 sign-off.
 - Teaching threads done live: stop = structure / size = risk / conflict = pass; tier rubric (Pass/C/B/A, max needs two votes, ceiling ~base for first 20-30 trades); five setup states observed in one session (BB walk-through, PLTR retest, HOOD blow-through, COIN runner, WEN failed KL).
 - Pending: Sprint 002 A-011 (one real morning sizing vs hand math) — do next morning as dry run. Premarket-BSL variant to be specced + paper-tracked before any capital (Dave's request after HOOD). True 4pm EOD pass proposed as scheduled task.
 - Machine notes: PDF read via host Read (triggers iCloud materialization); `.git/index.lock` still present — remove before next commit; journal/, pine/ dirs are new and uncommitted.
+- **EOD pass (scheduled task) 7/3 ~16:17 ET:** skipped — US market holiday (Independence Day observed; July 4 falls on Saturday). No data fetched; no journal/ledger changes.
 - **EOD pass (scheduled task) ran 7/2 ~16:20 ET:** ledger clean (exit 0, TODAY $0 / WTD +$458.61, no warnings); 1 fill today (recurring PURR → review list); NLV closed $3,620,674.81 (−$253.8K on day, all legacy MTM); broad PM fade — HOOD and CRCL lost their KLs on the close, BB failed KL −9.9%, MSTR alone held (100.60); journal EOD section + 3 ticker files + watchlist index updated.
 
 ## Mac Studio session — 2026-07-01 late evening (Architect)
