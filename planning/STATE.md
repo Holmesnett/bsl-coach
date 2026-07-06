@@ -65,9 +65,23 @@ closes on its A-011 sign-off.
   record the result here.**
 - Flip progress (Mac Studio, ~10:30 ET): bridge cloned + pinned + npm-installed
   at `~/tools/tradingview-mcp`; Claude config merged (`tradingview` added,
-  `unusualwhales` preserved, `.bak` saved); repo pushed (`8902448`). Remaining:
-  Claude restart → TV debug launch (script) → 4-step verification. Reminder:
+  `unusualwhales` preserved, `.bak` saved); repo pushed (`8902448`). Reminder:
   debug flag is per-launch — Dock-launched TV = port closed = bridge off.
+- **TV bridge VERIFIED LIVE ~10:30 ET 7/6 (D-024 operational).** Health check ✓;
+  Pine level reads EXACT vs Adam's sheet on QQQ + AAPL panes (BSL DAILY A) and
+  INTC via symbol round-trip; live quote ✓; screenshots ✓ (folder
+  `~/tools/tradingview-mcp/screenshots` now a connected Cowork folder).
+  Step 4 (pine_set_source injection replacing the manual paste-over) deferred
+  to first real use at tomorrow's premarket.
+  **Bridge operating notes:** (1) `layout_switch` reports success but does NOT
+  move the visible window — Dave drives layout changes manually; (2) reads
+  follow the ATTACHED tab, not the visible one — after Dave changes tabs, run
+  `tab_list` (foreground sorts first) + `tab_switch 0` to re-attach;
+  (3) pine-line reads are per-pane — `pane_focus` each pane, read, repeat;
+  (4) dynamic lines (session H/L + price) come back mixed in with the levels —
+  filter against the day's sheet. Dave's BSL layouts: "BSL DAILY A"
+  (QQQ/AVGO/MU/WULF/AAPL/GLW) + "BSL DAILY B" (INTC/SPCX + QQQ fillers),
+  6 panes each.
 - Sprint 002 A-011 still open (no sizing yet as of ~10:00 ET; morning watched:
   AAPL through KL premarket-ish, AVGO gapped past entry, GLW/WULF knocking).
 
