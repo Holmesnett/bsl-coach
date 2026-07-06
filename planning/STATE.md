@@ -55,7 +55,9 @@ closes on its A-011 sign-off.
 - Pine fix shipped: level drawing moved from bar-0 anchor to last-bar anchor
   (extend.both) — bar-0 drawings silently die on deep-history symbols (QQQ).
   Carry this pattern into all future generated scripts.
-- **TV-MCP (D-024) prepped, NOT yet installed:** Dave chose midday flip.
+- **TV-MCP (D-024) flip IN PROGRESS as of ~10:15 ET 7/6** — Dave restarting
+  Claude + TV now. Local commit made this session; **`git push` pending**
+  (run from Terminal — sandbox has no GitHub credentials).
   Runbook = `docs/TV_MCP_SETUP.md` (install commands, Claude config, launch,
   4-step verification, rollback). Repo security-reviewed at pinned `c34dfd5`.
   Risks R-012/R-013/R-014 recorded; TV panel confirmed broker-disconnected.
